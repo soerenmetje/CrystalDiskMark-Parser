@@ -6,6 +6,7 @@
 
 import re
 from typing import List
+import pandas as pd
 
 # regex to match lines
 # use https://regex101.com to visualise regex
@@ -106,7 +107,100 @@ def __parse_line(line):
     return None, None
 
 
-def parse(filepath):
+def parse_df(filepath) -> pd.DataFrame:
+    """
+    Parse CrystalDiskMark text file at given filepath to a `pandas.DataFrame`.
+    Rates may vary slightly due to floating point arithmetic.
+
+
+    Columns in Dataframe:
+        - date --- (same value each row)
+        - test --- (same value each row)
+        - time --- (same value each row)
+        - os --- (same value each row)
+        - mode --- (same value each row)
+        - profile --- (same value each row)
+        - comment --- (same value each row)
+        - read_write
+        - type
+        - blocksize
+        - unit_blocksize
+        - queues
+        - threads
+        - rate
+        - unit_rate
+        - iops
+        - unit_iops
+        - latency
+        - unit_latency
+
+    Parameters
+    ----------
+    filepath : str
+        Filepath for file to be parsed
+
+    Returns
+    -------
+    data : pandas.Dataframe
+        Parsed data
+
+    """
+
+    df = pd.DataFrame(columns=["date", "test", "time", "os", "mode", "profile", "comment", "read_write", "type", "blocksize", "unit_blocksize", "queues", "threads",
+                               "rate", "unit_rate", "iops", "unit_iops", "latency", "unit_latency"])
+
+    res = parse(filepath)
+
+    for r in res.read_results:
+        df = df.append({
+            "read_write": "read",
+            "date": res.date,
+            "test": res.test,
+            "time": res.time,
+            "os": res.os,
+            "mode": res.mode,
+            "profile": res.profile,
+            "comment": res.comment,
+            "type": r.test_type,
+            "blocksize": r.block_size,
+            "unit_blocksize": r.unit_block_size,
+            "queues": r.queues,
+            "threads": r.threads,
+            "rate": r.rate,
+            "unit_rate": r.unit_rate,
+            "iops": r.iops,
+            "unit_iops": r.unit_iops,
+            "latency": r.latency,
+            "unit_latency": r.unit_latency,
+        }, ignore_index=True)
+
+    for r in res.write_results:
+        df = df.append({
+            "read_write": "write",
+            "date": res.date,
+            "test": res.test,
+            "time": res.time,
+            "os": res.os,
+            "mode": res.mode,
+            "profile": res.profile,
+            "comment": res.comment,
+            "type": r.test_type,
+            "blocksize": r.block_size,
+            "unit_blocksize": r.unit_block_size,
+            "queues": r.queues,
+            "threads": r.threads,
+            "rate": r.rate,
+            "unit_rate": r.unit_rate,
+            "iops": r.iops,
+            "unit_iops": r.unit_iops,
+            "latency": r.latency,
+            "unit_latency": r.unit_latency,
+        }, ignore_index=True)
+
+    return df
+
+
+def parse(filepath) -> BenchmarkResult:
     """
     Parse CrystalDiskMark text file at given filepath. Rates may vary slightly due to floating point arithmetic.
 
@@ -132,7 +226,7 @@ def parse(filepath):
             key, match = __parse_line(line)
 
             if key == 'read_or_write':
-                read_or_write = match.group('read_or_write').lower()
+                read_or_write = match.group('read_or_write').lower()  # in read or write section
 
             elif key == 'test_res':
                 test_result = TestResult()
@@ -181,5 +275,4 @@ def parse(filepath):
                     result.comment = match.group('comment').strip()
 
             line = file.readline()
-
     return result
