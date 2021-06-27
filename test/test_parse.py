@@ -5,7 +5,7 @@
 
 import unittest
 
-from crystaldiskmark_parser.parser import parse
+from crystaldiskmark_parser.parser import parse, parse_df
 
 
 class TestCaseParser(unittest.TestCase):
@@ -66,6 +66,79 @@ class TestCaseParser(unittest.TestCase):
         self.assertEqual(4, len(benchmark_result.write_results))
         self.assertEqual(4, len(benchmark_result.read_results))
         # TODO add assert TestResults
+
+    def test_parse_df1(self):
+        df = parse_df("data/CrystalDiskMark_20210623000551.txt")
+
+        for e in df['test']:
+            self.assertEqual("512 MiB (x2) [F: 78% (182/233GiB)]", e)
+        for e in df['type']:
+            self.assertIn(e, ["SEQ", "RND"])
+        for e in df['read_write']:
+            self.assertIn(e, ["read", "write"])
+
+        for e in df.loc[(df['test'] == "512 MiB (x2) [F: 78% (182/233GiB)]")  # only 1 entry
+                        & (df['read_write'] == 'read')
+                        & (df['type'] == "SEQ")
+                        & (df['queues'] == 8)]["blocksize"]:
+            self.assertAlmostEqual(e, 1.0)
+
+        for e in df.loc[(df['test'] == "512 MiB (x2) [F: 78% (182/233GiB)]")  # only 1 entry
+                        & (df['read_write'] == 'read')
+                        & (df['type'] == "SEQ")
+                        & (df['queues'] == 1)]["blocksize"]:
+            self.assertAlmostEqual(e, 1.0)
+
+        for e in df.loc[(df['test'] == "512 MiB (x2) [F: 78% (182/233GiB)]")  # only 1 entry
+                        & (df['read_write'] == 'read')
+                        & (df['type'] == "SEQ")
+                        & (df['queues'] == 8)]["rate"]:
+            self.assertAlmostEqual(e, 550.022)
+
+        for e in df.loc[(df['test'] == "512 MiB (x2) [F: 78% (182/233GiB)]")  # only 1 entry
+                        & (df['read_write'] == 'read')
+                        & (df['type'] == "SEQ")
+                        & (df['queues'] == 1)]["rate"]:
+            self.assertAlmostEqual(e, 494.879)
+
+        for e in df.loc[(df['test'] == "512 MiB (x2) [F: 78% (182/233GiB)]")  # only 1 entry
+                        & (df['read_write'] == 'read')
+                        & (df['type'] == "RND")
+                        & (df['queues'] == 32)]["rate"]:
+            self.assertAlmostEqual(e, 258.572)
+
+        for e in df.loc[(df['test'] == "512 MiB (x2) [F: 78% (182/233GiB)]")  # only 1 entry
+                        & (df['read_write'] == 'read')
+                        & (df['type'] == "RND")
+                        & (df['queues'] == 1)]["rate"]:
+            self.assertAlmostEqual(e, 46.627)
+
+        for e in df.loc[(df['test'] == "512 MiB (x2) [F: 78% (182/233GiB)]")  # only 1 entry
+                        & (df['read_write'] == 'read')
+                        & (df['type'] == "RND")
+                        & (df['queues'] == 1)]["iops"]:
+            self.assertAlmostEqual(e, 11383.5)
+
+        for e in df.loc[(df['test'] == "512 MiB (x2) [F: 78% (182/233GiB)]")  # only 1 entry
+                        & (df['read_write'] == 'read')
+                        & (df['type'] == "RND")
+                        & (df['queues'] == 1)]["latency"]:
+            self.assertAlmostEqual(e, 87.50)
+
+        for e in df.loc[(df['test'] == "512 MiB (x2) [F: 78% (182/233GiB)]")  # only 1 entry
+                        & (df['read_write'] == 'write')
+                        & (df['type'] == "SEQ")
+                        & (df['queues'] == 8)]["rate"]:
+            self.assertAlmostEqual(e, 513.437)
+
+        for e in df.loc[(df['test'] == "512 MiB (x2) [F: 78% (182/233GiB)]")  # only 1 entry
+                        & (df['read_write'] == 'write')
+                        & (df['type'] == "RND")
+                        & (df['queues'] == 32)]["rate"]:
+            self.assertAlmostEqual(e, 237.469)
+
+        for e in df.loc[(df['test'] == "512 MiB (x2) [F: 78% (182/233GiB)]")]["os"]:
+            self.assertEqual("Windows 10  [10.0 Build 19042] (x64)", e)
 
 
 if __name__ == '__main__':
