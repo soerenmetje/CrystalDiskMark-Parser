@@ -1,0 +1,26 @@
+------------------------------------------------------------------------------
+CrystalDiskMark 8.0.2 x64 (C) 2007-2021 hiyohiyo
+                                  Crystal Dew World: https://crystalmark.info/
+------------------------------------------------------------------------------
+* MB/s = 1,000,000 bytes/s [SATA/600 = 600,000,000 bytes/s]
+* KB = 1000 bytes, KiB = 1024 bytes
+
+[Read]
+  SEQ    1MiB (Q=  8, T= 1):  2293.007 MB/s [   2186.8 IOPS] <  3611.16 us>
+  SEQ  128KiB (Q= 32, T= 1):  2470.266 MB/s [  18846.6 IOPS] <  1644.22 us>
+  RND    4KiB (Q= 32, T=16):  1158.079 MB/s [ 282734.1 IOPS] <  1803.18 us>
+  RND    4KiB (Q=  1, T= 1):    58.357 MB/s [  14247.3 IOPS] <    70.06 us>
+
+[Write]
+  SEQ    1MiB (Q=  8, T= 1):  2011.334 MB/s [   1918.2 IOPS] <  4155.21 us>
+  SEQ  128KiB (Q= 32, T= 1):  2001.788 MB/s [  15272.4 IOPS] <  2091.94 us>
+  RND    4KiB (Q= 32, T=16):  1795.237 MB/s [ 438290.3 IOPS] <  1167.29 us>
+  RND    4KiB (Q=  1, T= 1):   220.477 MB/s [  53827.4 IOPS] <    18.46 us>
+
+Profile: Default
+   Test: 1 GiB (x5) [D: 48% (893/1863GiB)]
+   Mode: [Admin]
+   Time: Measure 5 sec / Interval 5 sec 
+   Date: 2021/06/27 17:28:12
+     OS: Windows 10 Professional [10.0 Build 19041] (x64)
+Comment: Crucial P2 2TB @ PCIe 3.0 x4
