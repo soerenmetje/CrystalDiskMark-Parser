@@ -48,11 +48,11 @@ jobs:
           .
       
       # TODO: Add testing package
+      # TODO: Add creating release on GitHub
       
       # Upload package to PyPI 
       # (only tagged commits)
       - name: Upload package to PyPI
-        if: startsWith(github.ref, 'refs/tags')
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           user: __token__
