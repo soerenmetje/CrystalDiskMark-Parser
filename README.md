@@ -201,3 +201,18 @@ print(benchmark_result)
 ```
 BenchmarkResult({'test': '1 GiB (x5) [E: 96% (894/932GiB)]', 'date': '2021/06/22 17:19:21', 'os': 'Windows 10  [10.0 Build 19042] (x64)', 'profile': 'Default', 'time': 'Measure 5 sec / Interval 5 sec', 'mode': '[Admin]', 'comment': 'WD Blue 3D 1TB WDS100T2B0A', 'write_results': [TestResult({'test_type': 'SEQ', 'block_size': 1.0, 'unit_block_size': 'MiB', 'queues': 8, 'threads': 1, 'rate': 498.656, 'unit_rate': 'MB/s', 'iops': 475.6, 'unit_iops': 'IOPS', 'latency': 16750.3, 'unit_latency': 'us'}), TestResult({'test_type': 'SEQ', 'block_size': 1.0, 'unit_block_size': 'MiB', 'queues': 1, 'threads': 1, 'rate': 485.163, 'unit_rate': 'MB/s', 'iops': 462.7, 'unit_iops': 'IOPS', 'latency': 2159.18, 'unit_latency': 'us'}), TestResult({'test_type': 'RND', 'block_size': 4.0, 'unit_block_size': 'KiB', 'queues': 32, 'threads': 1, 'rate': 222.691, 'unit_rate': 'MB/s', 'iops': 54367.9, 'unit_iops': 'IOPS', 'latency': 583.02, 'unit_latency': 'us'}), TestResult({'test_type': 'RND', 'block_size': 4.0, 'unit_block_size': 'KiB', 'queues': 1, 'threads': 1, 'rate': 99.9, 'unit_rate': 'MB/s', 'iops': 24389.6, 'unit_iops': 'IOPS', 'latency': 40.73, 'unit_latency': 'us'})], 'read_results': [TestResult({'test_type': 'SEQ', 'block_size': 1.0, 'unit_block_size': 'MiB', 'queues': 8, 'threads': 1, 'rate': 531.458, 'unit_rate': 'MB/s', 'iops': 506.8, 'unit_iops': 'IOPS', 'latency': 15726.77, 'unit_latency': 'us'}), TestResult({'test_type': 'SEQ', 'block_size': 1.0, 'unit_block_size': 'MiB', 'queues': 1, 'threads': 1, 'rate': 489.838, 'unit_rate': 'MB/s', 'iops': 467.1, 'unit_iops': 'IOPS', 'latency': 2139.41, 'unit_latency': 'us'}), TestResult({'test_type': 'RND', 'block_size': 4.0, 'unit_block_size': 'KiB', 'queues': 32, 'threads': 1, 'rate': 269.406, 'unit_rate': 'MB/s', 'iops': 65772.9, 'unit_iops': 'IOPS', 'latency': 470.58, 'unit_latency': 'us'}), TestResult({'test_type': 'RND', 'block_size': 4.0, 'unit_block_size': 'KiB', 'queues': 1, 'threads': 1, 'rate': 41.375, 'unit_rate': 'MB/s', 'iops': 10101.3, 'unit_iops': 'IOPS', 'latency': 98.75, 'unit_latency': 'us'})]})
 ```
+
+
+## Development
+
+### Build and Publish a New Release
+
+This repository has a CI/CD pipeline that handle building and publishing the package to PyPI.
+It is triggered by tagging a commit. The pipeline publishes only tagged commits on PyPI.
+
+#### Steps to publish a new release:
+
+1. Check if the version number is correctly set in `setup.py` and `__init__.py`
+1. Create a new *Release* in GitHub. Set the version number as the name
+1. Wait until pipeline ends
+1. Check if package is available on [PyPI](https://pypi.org/project/crystaldiskmark-parser/)
