@@ -50,8 +50,7 @@ jobs:
       # TODO: Add testing package
       # TODO: Add creating release on GitHub
       
-      # Upload package to PyPI 
-      # (only tagged commits)
+      # Upload package to PyPI
       - name: Upload package to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
