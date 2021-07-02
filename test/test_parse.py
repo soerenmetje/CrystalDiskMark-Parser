@@ -2,15 +2,17 @@
 #
 # author Soeren Metje
 # created on 2021-06-23
-
+import os
 import unittest
 
 from crystaldiskmark_parser.parser import parse, parse_df
 
+THIS_DIR = os.path.dirname(os.path.abspath(__file__))  # needed access data from other scopes
+
 
 class TestCaseParser(unittest.TestCase):
     def test_parse1(self):
-        benchmark_result = parse("data/CrystalDiskMark_20210622162528 WD Blue 3D 1TB WDS100T2B0A.txt")
+        benchmark_result = parse(os.path.join(THIS_DIR, "data/CrystalDiskMark_20210622162528 WD Blue 3D 1TB WDS100T2B0A.txt"))
 
         self.assertEqual("Windows 10  [10.0 Build 19042] (x64)", benchmark_result.os)
         self.assertEqual("2021/06/22 17:19:21", benchmark_result.date)
@@ -18,7 +20,7 @@ class TestCaseParser(unittest.TestCase):
         self.assertEqual("[Admin]", benchmark_result.mode)
         self.assertEqual("1 GiB (x5) [E: 96% (894/932GiB)]", benchmark_result.test)
         self.assertEqual("Default", benchmark_result.profile)
-        self.assertEqual("WD Blue 3D 1TB WDS100T2B0A", benchmark_result.comment)
+        self.assertEqual("WD Blue 3D 1TB", benchmark_result.comment)
 
         self.assertEqual(4, len(benchmark_result.write_results))
         self.assertEqual(4, len(benchmark_result.read_results))
@@ -40,7 +42,7 @@ class TestCaseParser(unittest.TestCase):
         self.assertAlmostEqual(470.58, benchmark_result.read_results[2].latency, places=2)
 
     def test_parse2(self):
-        benchmark_result = parse("data/CrystalDiskMark_20210622163451 SAMSUNG 840 EVO 120GB.txt")
+        benchmark_result = parse(os.path.join(THIS_DIR, "data/CrystalDiskMark_20210622163451 SAMSUNG 840 EVO 120GB.txt"))
 
         self.assertEqual("Windows 10  [10.0 Build 19042] (x64)", benchmark_result.os)
         self.assertEqual("2021/06/22 16:34:54", benchmark_result.date)
@@ -48,13 +50,13 @@ class TestCaseParser(unittest.TestCase):
         self.assertEqual("[Admin]", benchmark_result.mode)
         self.assertEqual("1 GiB (x5) [C: 98% (109/111GiB)]", benchmark_result.test)
         self.assertEqual("Default", benchmark_result.profile)
-        self.assertIsNone(benchmark_result.comment)
+        self.assertEqual("Samsung 840 EVO 120GB", benchmark_result.comment)
         self.assertEqual(4, len(benchmark_result.write_results))
         self.assertEqual(4, len(benchmark_result.read_results))
         # TODO add assert TestResults
 
     def test_parse3(self):
-        benchmark_result = parse("data/CrystalDiskMark_20210623000551.txt")
+        benchmark_result = parse(os.path.join(THIS_DIR, "data/CrystalDiskMark_20210623000551.txt"))
 
         self.assertEqual("Windows 10  [10.0 Build 19042] (x64)", benchmark_result.os)
         self.assertEqual("2021/06/23 0:05:57", benchmark_result.date)
@@ -68,7 +70,7 @@ class TestCaseParser(unittest.TestCase):
         # TODO add assert TestResults
 
     def test_parse_df1(self):
-        df = parse_df("data/CrystalDiskMark_20210623000551.txt")
+        df = parse_df(os.path.join(THIS_DIR, "data/CrystalDiskMark_20210623000551.txt"))
 
         for e in df['test']:
             self.assertEqual("512 MiB (x2) [F: 78% (182/233GiB)]", e)

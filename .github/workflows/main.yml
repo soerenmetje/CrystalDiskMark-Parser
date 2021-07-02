@@ -46,8 +46,14 @@ jobs:
           --wheel
           --outdir dist/
           .
-      
-      # TODO: Add testing package
+
+
+      - name: Unit test package
+        run: >-
+          python -m
+          unittest discover test/
+
+
       # TODO: Add creating release on GitHub
       
       # Upload package to PyPI
