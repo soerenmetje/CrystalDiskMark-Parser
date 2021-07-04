@@ -46,8 +46,19 @@ jobs:
           --wheel
           --outdir dist/
           .
-      
-      # TODO: Add testing package
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if [ -f setup.py ]; then pip install .; fi
+
+      - name: Unit test package
+        run: >-
+          python -m
+          unittest discover test/
+
+
       # TODO: Add creating release on GitHub
       
       # Upload package to PyPI
