@@ -159,73 +159,73 @@ def parse_df(filepath) -> pd.DataFrame:
     res = parse(filepath)
 
     for r in res.read_results:
-        df = df._append({
-            "read_write_mix": "read",
-            "date": res.date,
-            "test": res.test,
-            "time": res.time,
-            "os": res.os,
-            "mode": res.mode,
-            "profile": res.profile,
-            "comment": res.comment,
-            "type": r.test_type,
-            "blocksize": r.block_size,
-            "unit_blocksize": r.unit_block_size,
-            "queues": r.queues,
-            "threads": r.threads,
-            "rate": r.rate,
-            "unit_rate": r.unit_rate,
-            "iops": r.iops,
-            "unit_iops": r.unit_iops,
-            "latency": r.latency,
-            "unit_latency": r.unit_latency,
-        }, ignore_index=True)
+        df = pd.concat([df, pd.DataFrame({
+            "read_write_mix": ["read"],
+            "date": [res.date],
+            "test": [res.test],
+            "time": [res.time],
+            "os": [res.os],
+            "mode": [res.mode],
+            "profile": [res.profile],
+            "comment": [res.comment],
+            "type": [r.test_type],
+            "blocksize": [r.block_size],
+            "unit_blocksize": [r.unit_block_size],
+            "queues": [r.queues],
+            "threads": [r.threads],
+            "rate": [r.rate],
+            "unit_rate": [r.unit_rate],
+            "iops": [r.iops],
+            "unit_iops": [r.unit_iops],
+            "latency": [r.latency],
+            "unit_latency": [r.unit_latency],
+        })], ignore_index=True)
 
     for r in res.write_results:
-        df = df._append({
-            "read_write_mix": "write",
-            "date": res.date,
-            "test": res.test,
-            "time": res.time,
-            "os": res.os,
-            "mode": res.mode,
-            "profile": res.profile,
-            "comment": res.comment,
-            "type": r.test_type,
-            "blocksize": r.block_size,
-            "unit_blocksize": r.unit_block_size,
-            "queues": r.queues,
-            "threads": r.threads,
-            "rate": r.rate,
-            "unit_rate": r.unit_rate,
-            "iops": r.iops,
-            "unit_iops": r.unit_iops,
-            "latency": r.latency,
-            "unit_latency": r.unit_latency,
-        }, ignore_index=True)
+        df = pd.concat([df, pd.DataFrame({
+            "read_write_mix": ["write"],
+            "date": [res.date],
+            "test": [res.test],
+            "time": [res.time],
+            "os": [res.os],
+            "mode": [res.mode],
+            "profile": [res.profile],
+            "comment": [res.comment],
+            "type": [r.test_type],
+            "blocksize": [r.block_size],
+            "unit_blocksize": [r.unit_block_size],
+            "queues": [r.queues],
+            "threads": [r.threads],
+            "rate": [r.rate],
+            "unit_rate": [r.unit_rate],
+            "iops": [r.iops],
+            "unit_iops": [r.unit_iops],
+            "latency": [r.latency],
+            "unit_latency": [r.unit_latency],
+        })], ignore_index=True)
 
     for r in res.mix_results:
-        df = df._append({
-            "read_write_mix": "mix",
-            "date": res.date,
-            "test": res.test,
-            "time": res.time,
-            "os": res.os,
-            "mode": res.mode,
-            "profile": res.profile,
-            "comment": res.comment,
-            "type": r.test_type,
-            "blocksize": r.block_size,
-            "unit_blocksize": r.unit_block_size,
-            "queues": r.queues,
-            "threads": r.threads,
-            "rate": r.rate,
-            "unit_rate": r.unit_rate,
-            "iops": r.iops,
-            "unit_iops": r.unit_iops,
-            "latency": r.latency,
-            "unit_latency": r.unit_latency,
-        }, ignore_index=True)
+        df = pd.concat([df, pd.DataFrame({
+            "read_write_mix": ["mix"],
+            "date": [res.date],
+            "test": [res.test],
+            "time": [res.time],
+            "os": [res.os],
+            "mode": [res.mode],
+            "profile": [res.profile],
+            "comment": [res.comment],
+            "type": [r.test_type],
+            "blocksize": [r.block_size],
+            "unit_blocksize": [r.unit_block_size],
+            "queues": [r.queues],
+            "threads": [r.threads],
+            "rate": [r.rate],
+            "unit_rate": [r.unit_rate],
+            "iops": [r.iops],
+            "unit_iops": [r.unit_iops],
+            "latency": [r.latency],
+            "unit_latency": [r.unit_latency],
+        })], ignore_index=True)
 
     return df
 
@@ -309,6 +309,7 @@ def parse(filepath) -> BenchmarkResult:
 
             line = file.readline()
     return result
+
 
 def convert_cdm7_result_encoding(file_path: str) -> str:
     """function convert_cdm7_result_encoding
