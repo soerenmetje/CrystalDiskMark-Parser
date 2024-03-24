@@ -309,3 +309,16 @@ def parse(filepath) -> BenchmarkResult:
 
             line = file.readline()
     return result
+
+def convert_cdm7_result_encoding(file_path: str) -> str:
+    """function convert_cdm7_result_encoding
+Converts CDM7 UTF-16LE formatted result file to UTF-8
+- Input: path_to_result_file
+- Return: the converted file path"""
+    utf_16_file = file_path
+    utf_8_file = file_path.replace(".txt", "_converted.txt")
+    with io.open(utf_16_file, 'r', encoding='utf-16 le') as stream:
+        data = stream.readlines()
+    with io.open(utf_8_file, 'wt', encoding='utf-8') as stream:
+        stream.writelines(data)
+    return utf_8_file
