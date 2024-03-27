@@ -114,7 +114,7 @@ def __parse_line(line):
     return None, None
 
 
-def parse_df(filepath, encoding:str = "utf-8") -> pd.DataFrame:
+def parse_df(filepath, encoding: str = "utf-8") -> pd.DataFrame:
     """
     Parse CrystalDiskMark text file at given filepath to a `pandas.DataFrame`.
     Rates may vary slightly due to floating point arithmetic.
@@ -160,7 +160,7 @@ def parse_df(filepath, encoding:str = "utf-8") -> pd.DataFrame:
     df = pd.DataFrame(columns=["date", "test", "time", "os", "mode", "profile", "comment", "read_write_mix", "type", "blocksize", "unit_blocksize", "queues", "threads",
                                "rate", "unit_rate", "iops", "unit_iops", "latency", "unit_latency"])
 
-    res = parse(filepath)
+    res = parse(filepath, encoding=encoding)
 
     for r in res.read_results:
         df = pd.concat([df, pd.DataFrame({
@@ -234,7 +234,7 @@ def parse_df(filepath, encoding:str = "utf-8") -> pd.DataFrame:
     return df
 
 
-def parse(filepath, encoding:str = "utf-8") -> BenchmarkResult:
+def parse(filepath, encoding: str = "utf-8") -> BenchmarkResult:
     """
     Parse CrystalDiskMark text file at given filepath. Rates may vary slightly due to floating point arithmetic.
 
