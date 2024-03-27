@@ -114,7 +114,7 @@ def __parse_line(line):
     return None, None
 
 
-def parse_df(filepath) -> pd.DataFrame:
+def parse_df(filepath, encoding:str = "utf-8") -> pd.DataFrame:
     """
     Parse CrystalDiskMark text file at given filepath to a `pandas.DataFrame`.
     Rates may vary slightly due to floating point arithmetic.
@@ -145,6 +145,10 @@ def parse_df(filepath) -> pd.DataFrame:
     ----------
     filepath : str
         Filepath for file to be parsed
+    encoding : str
+        File encoding
+        - `utf-8` for CDM8
+        - `utf-16 le` for CDM7
 
     Returns
     -------
@@ -230,7 +234,7 @@ def parse_df(filepath) -> pd.DataFrame:
     return df
 
 
-def parse(filepath) -> BenchmarkResult:
+def parse(filepath, encoding:str = "utf-8") -> BenchmarkResult:
     """
     Parse CrystalDiskMark text file at given filepath. Rates may vary slightly due to floating point arithmetic.
 
@@ -238,6 +242,10 @@ def parse(filepath) -> BenchmarkResult:
     ----------
     filepath : str
         Filepath for file to be parsed
+    encoding : str
+        File encoding
+        - `utf-8` for CDM8
+        - `utf-16 le` for CDM7
 
     Returns
     -------
@@ -247,7 +255,7 @@ def parse(filepath) -> BenchmarkResult:
     """
     result = BenchmarkResult()
     # open the file and read through it line by line
-    with io.open(filepath, 'r', encoding='utf-8') as file:
+    with io.open(filepath, 'r', encoding=encoding) as file:
         line = file.readline()
         read_or_write = None
 
@@ -309,17 +317,3 @@ def parse(filepath) -> BenchmarkResult:
 
             line = file.readline()
     return result
-
-
-def convert_cdm7_result_encoding(file_path: str) -> str:
-    """function convert_cdm7_result_encoding
-Converts CDM7 UTF-16LE formatted result file to UTF-8
-- Input: path_to_result_file
-- Return: the converted file path"""
-    utf_16_file = file_path
-    utf_8_file = file_path.replace(".txt", "_converted.txt")
-    with io.open(utf_16_file, 'r', encoding='utf-16 le') as stream:
-        data = stream.readlines()
-    with io.open(utf_8_file, 'wt', encoding='utf-8') as stream:
-        stream.writelines(data)
-    return utf_8_file
