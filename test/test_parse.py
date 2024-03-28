@@ -76,65 +76,65 @@ class TestCaseParser(unittest.TestCase):
             self.assertEqual("512 MiB (x2) [F: 78% (182/233GiB)]", e)
         for e in df['type']:
             self.assertIn(e, ["SEQ", "RND"])
-        for e in df['read_write']:
-            self.assertIn(e, ["read", "write"])
+        for e in df['read_write_mix']:
+            self.assertIn(e, ["read", "write", "mix"])
 
         for e in df.loc[(df['test'] == "512 MiB (x2) [F: 78% (182/233GiB)]")  # only 1 entry
-                        & (df['read_write'] == 'read')
+                        & (df['read_write_mix'] == 'read')
                         & (df['type'] == "SEQ")
                         & (df['queues'] == 8)]["blocksize"]:
             self.assertAlmostEqual(e, 1.0)
 
         for e in df.loc[(df['test'] == "512 MiB (x2) [F: 78% (182/233GiB)]")  # only 1 entry
-                        & (df['read_write'] == 'read')
+                        & (df['read_write_mix'] == 'read')
                         & (df['type'] == "SEQ")
                         & (df['queues'] == 1)]["blocksize"]:
             self.assertAlmostEqual(e, 1.0)
 
         for e in df.loc[(df['test'] == "512 MiB (x2) [F: 78% (182/233GiB)]")  # only 1 entry
-                        & (df['read_write'] == 'read')
+                        & (df['read_write_mix'] == 'read')
                         & (df['type'] == "SEQ")
                         & (df['queues'] == 8)]["rate"]:
             self.assertAlmostEqual(e, 550.022)
 
         for e in df.loc[(df['test'] == "512 MiB (x2) [F: 78% (182/233GiB)]")  # only 1 entry
-                        & (df['read_write'] == 'read')
+                        & (df['read_write_mix'] == 'read')
                         & (df['type'] == "SEQ")
                         & (df['queues'] == 1)]["rate"]:
             self.assertAlmostEqual(e, 494.879)
 
         for e in df.loc[(df['test'] == "512 MiB (x2) [F: 78% (182/233GiB)]")  # only 1 entry
-                        & (df['read_write'] == 'read')
+                        & (df['read_write_mix'] == 'read')
                         & (df['type'] == "RND")
                         & (df['queues'] == 32)]["rate"]:
             self.assertAlmostEqual(e, 258.572)
 
         for e in df.loc[(df['test'] == "512 MiB (x2) [F: 78% (182/233GiB)]")  # only 1 entry
-                        & (df['read_write'] == 'read')
+                        & (df['read_write_mix'] == 'read')
                         & (df['type'] == "RND")
                         & (df['queues'] == 1)]["rate"]:
             self.assertAlmostEqual(e, 46.627)
 
         for e in df.loc[(df['test'] == "512 MiB (x2) [F: 78% (182/233GiB)]")  # only 1 entry
-                        & (df['read_write'] == 'read')
+                        & (df['read_write_mix'] == 'read')
                         & (df['type'] == "RND")
                         & (df['queues'] == 1)]["iops"]:
             self.assertAlmostEqual(e, 11383.5)
 
         for e in df.loc[(df['test'] == "512 MiB (x2) [F: 78% (182/233GiB)]")  # only 1 entry
-                        & (df['read_write'] == 'read')
+                        & (df['read_write_mix'] == 'read')
                         & (df['type'] == "RND")
                         & (df['queues'] == 1)]["latency"]:
             self.assertAlmostEqual(e, 87.50)
 
         for e in df.loc[(df['test'] == "512 MiB (x2) [F: 78% (182/233GiB)]")  # only 1 entry
-                        & (df['read_write'] == 'write')
+                        & (df['read_write_mix'] == 'write')
                         & (df['type'] == "SEQ")
                         & (df['queues'] == 8)]["rate"]:
             self.assertAlmostEqual(e, 513.437)
 
         for e in df.loc[(df['test'] == "512 MiB (x2) [F: 78% (182/233GiB)]")  # only 1 entry
-                        & (df['read_write'] == 'write')
+                        & (df['read_write_mix'] == 'write')
                         & (df['type'] == "RND")
                         & (df['queues'] == 32)]["rate"]:
             self.assertAlmostEqual(e, 237.469)
