@@ -209,13 +209,14 @@ BenchmarkResult({'test': '1 GiB (x5) [E: 96% (894/932GiB)]', 'date': '2021/06/22
 
 ### Build and Publish a New Release
 
-This repository has a CI/CD pipeline that handle building and publishing the package to PyPI.
+This repository has a GH Actions CI/CD pipeline that handle building and publishing the package to PyPI.
 It is triggered by a commit or pull request on `main` branch. 
 
 #### Steps to publish a new release:
 
 1. Check if the version number is correctly set in `setup.py` and `__init__.py`
 2. Create a new pull request from `dev` branch to `main` branch. Accept this pull request
-3. Wait until the pipeline ends
-4. Check if package is available on [PyPI](https://pypi.org/project/crystaldiskmark-parser/)
-5. Create a new *Release* in GitHub. Set the version number as the name
+3. Wait until the _test_ GH workflow ends and succeeds
+4. Create a new *Release* in GitHub. Set the version number as the name
+5. Wait until the _publish_ GH workflow ends and succeeds
+6. Check if package is available on [PyPI](https://pypi.org/project/crystaldiskmark-parser/)
